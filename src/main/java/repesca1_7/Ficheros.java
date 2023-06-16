@@ -11,7 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -46,45 +48,48 @@ public class Ficheros {
                 
                 if(contador > 0){
 //                    d.setCodIDA(Integer.parseInt(tokens[0]));
-                    if(tokens[0].isEmpty()){
-                        d.setCodIDA(0);
-                    }else{
+                    if(tokens.length == 6){ // Hay que tener cuidado con el length() ya que cuenta desde 0
                         d.setCodIDA(Integer.parseInt(tokens[0]));
-                    }
-                    
-                    if(tokens[1].isEmpty()){
-                        d.setNombreInst("");
-                    }else{
                         d.setNombreInst(tokens[1]);
-                    }
-                    
-                    if(tokens[2].isEmpty()){
-                       d.setProvincia("");
-                    }else{
                         d.setProvincia(tokens[2]);
-                    }
-                    
-                    if(tokens[3].isEmpty()){
-                        d.setMunicipio("");
-                    }else{
                         d.setMunicipio(tokens[3]);
-                    }
-                    if(tokens[4].isEmpty()){
-                        d.setVia("");
-                    }else{
                         d.setVia(tokens[4]);
-                    }
-                    if(tokens[5].isEmpty()){
-                        d.setCp("");
-                    }else{
-                         d.setCp(tokens[5]);
-                    }
-                    if(tokens[6].isEmpty()){
+                        d.setCp(tokens[5]);
                         d.setEspDeportivo("");
-                    }else{
-                      d.setEspDeportivo(tokens[6]);  
                     }
                     
+                    if(tokens.length == 7){
+                        d.setCodIDA(Integer.parseInt(tokens[0]));
+                        d.setNombreInst(tokens[1]);
+                        d.setProvincia(tokens[2]);
+                        d.setMunicipio(tokens[3]);
+                        d.setVia(tokens[4]);
+                        d.setCp(tokens[5]);
+                        d.setEspDeportivo(tokens[6]);
+                    }
+                    
+                    if(tokens.length == 8){
+                        d.setCodIDA(Integer.parseInt(tokens[0]));
+                        d.setNombreInst(tokens[1]);
+                        d.setProvincia(tokens[2]);
+                        d.setMunicipio(tokens[3]);
+                        d.setVia(tokens[4] + tokens[5]);
+                        d.setCp(tokens[6]);
+                        d.setEspDeportivo(tokens[7]);
+                    }
+                    
+                    if(tokens.length == 9){
+                        d.setCodIDA(Integer.parseInt(tokens[0]));
+                        d.setNombreInst(tokens[1]);
+                        d.setProvincia(tokens[2]);
+                        d.setMunicipio(tokens[3]);
+                        d.setVia(tokens[4] + tokens[5] + tokens[6]);
+                        d.setCp(tokens[7]);
+                        d.setEspDeportivo(tokens[8]);
+                    }
+
+
+
 //                    d.setNombreInst(tokens[1]);
 //                    d.setProvincia(tokens[2]);
 //                    d.setMunicipio(tokens[3]);
@@ -116,4 +121,22 @@ public class Ficheros {
 //        }
         return lista;
     }
+    
+    public static Map<String, Integer> numInstalaciones(List<Deportivos> l){
+        Map<String, Integer> map = new HashMap();
+        
+        for (Deportivos deportivos : l) {
+            if(map.containsKey(deportivos.getNombreInst())){
+                int contador = map.get(deportivos.getNombreInst()) + 1;
+                map.put(deportivos.getNombreInst(), contador);
+            }else{
+                map.put(deportivos.getNombreInst(), 1);
+            }
+        }
+        
+        return map;
+        
+    }
+    
+    
 }

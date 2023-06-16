@@ -5,6 +5,7 @@
 package repesca1_7;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -17,5 +18,14 @@ public class Main {
         for (Deportivos deportivos : lista) {
             System.out.println(deportivos);
         }
+        
+        Map<String, Integer> mapContador =  Ficheros.numInstalaciones(lista);
+        
+        for (Map.Entry<String, Integer> entry : mapContador.entrySet()) {
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            System.out.println(key + ": " + val);
+        }
+        
     }
 }
